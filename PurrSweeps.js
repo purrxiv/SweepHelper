@@ -296,7 +296,7 @@ function buildOutputString(isDynamis) {
                         break;
                 }
             } else if (wardDistributionDirectory.Normal.Mixed.includes(sweepData.Mist[i].ward)) {
-                switch (sweepData.LavenderBeds[i].size) {
+                switch (sweepData.Mist[i].size) {
                     case (Sizes.LARGE):
                         line = line.concat("@LargeMistFC @LargeMistPersonal ");
                         break;
@@ -615,6 +615,6 @@ function buildOutputString(isDynamis) {
         outputString = outputString.concat(line);
     }
 
-    return outputString;
+    return outputString.trim();
 }
 
