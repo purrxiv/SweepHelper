@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purr's Sweep Helper</title>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+<script type="text/javascript" src="PurrSweeps.js"></script>
+<script type="text/javascript">
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+            addPlotAndUpdate(document.getElementById('dynamis').checked)
+        }
+    })
+
+    function inputIsValid() {
+        let ward = parseInt(document.getElementById('ward').value);
+        let plot = parseInt(document.getElementById('plot').value);
+
+        return !(ward < 1 || ward > 30 || plot < 1 || plot > 60 || isNaN(ward) || isNaN(plot));
+    }
+
+    function updateOutput(isDynamis) {
+        document.getElementById("output-text").innerText = buildOutputString(isDynamis);
+        document.getElementById("plot").value = "";
+    }
+
+    function addPlotAndUpdate(isDynamis) {
+        if (!inputIsValid()) {
+            alert("Invalid input. Wards must be from 1-30 inclusive, and plots must be from 1-60 inclusive.")
+            return;
+        }
+        addPlotToSweep(parseInt(document.getElementById('district').value), parseInt(document.getElementById('ward').value), parseInt(document.getElementById('plot').value));
+        updateOutput(isDynamis);
+    }
+</script>
+
+<div class="container-title">
+    <h1 class="oxygen-bold">Purr's Sweep Helper</h1>
+    <h2 class="oxygen-bold">Instructions</h2>
+    <p class="oxygen-regular">This tool is designed to make mass entry of plot data while sweeping as streamlined and
+        effortless as possible.
+        Pick the district you are sweeping, go through the aetheryte ward by ward, enter each vacant plot number,
+        press Enter/Return to add it to the list, then move to the next district and repeat. This tool will do the rest
+        of the formatting work for you. Don't forget to check the "Dynamis ward distribution" setting if you are on
+        Dynamis
+        where the ward distribution between FC, Personal, and Mixed are different. When you're done, you can simply copy
+        the formatted output and paste it straight into a Housing Alerts Discord sweep channel.</p>
+</div>
+<div class="container">
+    <form>
+        <label for="district" class="oxygen-regular">District:</label>
+        <select name="district" id="district">
+            <option value="1">Lavender Beds</option>
+            <option value="2">Mist</option>
+            <option value="3">The Goblet</option>
+            <option value="4">Shirogane</option>
+            <option value="5">Empyreum</option>
+        </select>
+
+        <label for="ward" class="oxygen-regular">Ward:</label>
+        <input name="ward" id="ward" type="number" min="1" max="30" value="1">
+
+        <label for="plot" class="oxygen-regular">Plot:</label>
+        <input name="plot" id="plot" type="number" min="1" max="60" class="no-spin">
+
+        <label for="dynamis" class="oxygen-regular">Dynamis ward distribution?</label>
+        <input name="dynamis" id="dynamis" type="checkbox"
+               onclick="updateOutput(document.getElementById('dynamis').checked)">
+        <button type="button" onclick="addPlotAndUpdate(document.getElementById('dynamis').checked)"
+                class="oxygen-regular">Add Plot
+        </button>
+    </form>
+    <!--<button type="button" onclick="alert('not yet implemented') //TODO copy to clipboard"
+            class="oxygen-regular">Copy formatted output to clipboard
+    </button>-->
+</div>
+<div id="output" class="container oxygen-regular">
+    <p id="output-text">Formatted output goes here once you add a plot...</p>
+</div>
+<footer class="container">
+    <p class="oxygen-regular">Tool made by <a href="https://purr.moe">Purrnyan Mew'uwu@Diabolos</a>.</p>
+</footer>
+</body>
+</html>
