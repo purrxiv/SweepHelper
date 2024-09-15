@@ -34,6 +34,16 @@
         addPlotToSweep(parseInt(document.getElementById('district').value), parseInt(document.getElementById('ward').value), parseInt(document.getElementById('plot').value));
         updateOutput(isDynamis);
     }
+
+    function resetText(){
+        document.getElementById('copyButton').innerText = "Copy formatted output to clipboard"
+    }
+
+    async function copyToClipboard(){
+        await navigator.clipboard.writeText(document.getElementById('output-text').innerText);
+        document.getElementById('copyButton').innerText = "Copied!";
+        setTimeout(resetText, 4000);
+    }
 </script>
 
 <div class="container-title">
@@ -72,15 +82,16 @@
                 class="oxygen-regular">Add Plot
         </button>
     </form>
-    <!--<button type="button" onclick="alert('not yet implemented') //TODO copy to clipboard"
+    <button type="button" id="copyButton" onclick="copyToClipboard()"
             class="oxygen-regular">Copy formatted output to clipboard
-    </button>-->
+    </button>
 </div>
 <div id="output" class="container oxygen-regular">
     <p id="output-text">Formatted output goes here once you add a plot...</p>
 </div>
 <footer class="container">
     <p class="oxygen-regular">Tool made by <a href="https://purr.moe">Purrnyan Mew'uwu@Diabolos</a>.</p>
+    <p class="oxygen-regular">Report any issues directly to me on Discord (@cursedblackcat) or <a href="https://github.com/purrxiv/SweepHelper/issues">on GitHb</a>.</p>
 </footer>
 </body>
 </html>
